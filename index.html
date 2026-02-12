@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Valentine Cinematic 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#ff77a9;
+  --deep:#ff4f8b;
+  --soft:#fff0f6;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Fredoka',sans-serif;
+  background:var(--soft);
+  overflow:hidden;
+  text-align:center;
+}
+
+/* MAIN CONTENT */
+.stage{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:filter .4s ease;
+}
+
+.stage.blur{
+  filter:blur(8px) brightness(0.8);
+}
+
+.card{
+  background:white;
+  padding:40px;
+  border-radius:30px;
+  box-shadow:0 15px 40px rgba(255,80,140,0.25);
+  max-width:600px;
+  width:100%;
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  color:var(--deep);
+  font-size:38px;
+}
+
+.question{
+  font-size:22px;
+  margin:20px 0 30px;
+}
+
+.buttons{
+  position:relative;
+  height:120px;
+}
+
+button{
+  padding:14px 28px;
+  border:none;
+  border-radius:50px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  position:absolute;
+  transition:.2s;
+}
+
+#yesBtn{
+  background:var(--pink);
+  color:white;
+  left:30%;
+}
+
+#noBtn{
+  background:#ffd1e3;
+  color:#b03060;
+  left:55%;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+/* POPUP CINEMATIC */
+.popup{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  visibility:hidden;
+  opacity:0;
+  transition:.4s ease;
+}
+
+.popup.active{
+  visibility:visible;
+  opacity:1;
+}
+
+.popup-box{
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(10px);
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  max-width:420px;
+  position:relative;
+  animation:fadeUp .5s ease;
+}
+
+@keyframes fadeUp{
+  from{transform:translateY(40px); opacity:0}
+  to{transform:translateY(0); opacity:1}
+}
+
+/* FOTO */
+.photo-container{
+  position:relative;
+  display:inline-block;
+}
+
+.photo-container img{
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* RING */
+.ring{
+  position:absolute;
+  top:-120px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:60px;
+  opacity:0;
+}
+
+.ring.animate{
+  animation:dropRing 1s ease forwards;
+}
+
+@keyframes dropRing{
+  0%{top:-120px; opacity:0}
+  60%{top:-15px; opacity:1}
+  80%{top:5px}
+  100%{top:0}
+}
+
+/* HEART FALL */
+.heart{
+  position:fixed;
+  top:-20px;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stage" id="stage">
+  <div class="card">
+    <h1>Nadiraaa 💖</h1>
+    <div class="question">Will you be my Valentine? 🥺💘</div>
+
+    <div class="buttons">
+      <button id="yesBtn">Iyaaa 💞</button>
+      <button id="noBtn">Tidak 😜</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <div class="photo-container">
+      <div class="ring" id="ring">💍</div>
+      <img src="kita.jpeg" alt="Foto Kita">
+    </div>
+
+    <h2>Official Valentine 💕</h2>
+    <p>Scene romantis unlocked 😌✨</p> Makasi udah mau jawab yaa hehe:)
+
+    <button onclick="closePopup()" 
+      style="background:#ff77a9;color:white;padding:10px 20px;border:none;border-radius:30px;cursor:pointer;">
+      Tutup 🤍
+    </button>
+  </div>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="romantic-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const popup = document.getElementById("popup");
+const stage = document.getElementById("stage");
+const ring = document.getElementById("ring");
+const music = document.getElementById("bgMusic");
+
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 70;
+  const y = Math.random() * 60;
+  noBtn.style.left = x + "%";
+  noBtn.style.top = y + "%";
+});
+
+yesBtn.addEventListener("click", () => {
+  popup.classList.add("active");
+  stage.classList.add("blur");
+  ring.classList.add("animate");
+
+  music.play(); // 🎵 Lagu mulai setelah klik "Iyaaa"
+
+  for(let i=0;i<40;i++){
+    const heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+15)+"px";
+    heart.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  }
+});
+
+function closePopup(){
+  popup.classList.remove("active");
+  stage.classList.remove("blur");
+  ring.classList.remove("animate");
+}
+</script>
+
+</body>
+</html>
